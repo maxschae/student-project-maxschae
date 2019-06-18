@@ -3,7 +3,7 @@ name: student_project
 dependencies:
 - numpy
 - pandas
-- pandas 
+- geopandas
 - jupyterlab
 - matplotlib
 - seaborn

@@ -1,5 +1,6 @@
-__pxcache__/
-*.pyc
-.idea/
+__pycache__/
+arbitrary/
 .ipynb_checkpoints/
+student_project-work.ipynb
+worklab.ipynb
 *.html
