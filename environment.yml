@@ -4,9 +4,7 @@ dependencies:
 - numpy
 - pandas
 - geopandas
-- jupyterlab
+- statsmodels
 - matplotlib
 - seaborn
-- scipy
-- pip:
-  - grmpy
+- jupyterlab

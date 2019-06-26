@@ -107,23 +107,25 @@ def draw_settings_map(year):
 
     fig, (ax1, ax2) = plt.subplots(ncols=2, sharex=True, sharey=True, figsize=(20,7))
     
-    map_df_temp.plot(column='agri_gdpshare', cmap='Greens', ax=ax1, alpha=1, edgecolor='.3', linewidth=.3)
-    ax1.set_title('GDP share of agriculture in {:}'.format(year), fontsize=12)
+    map_df_temp.plot(column='agri_gdp_av', cmap='Greens', ax=ax1, alpha=1, edgecolor='.6', linewidth=.3)
+    ax1.set_title('Average agriculture GDP share (1980-2004)', fontsize=12)
     ax1.annotate('Countries in white: no data available.', xy=(0.1, .08), horizontalalignment='left', 
                 verticalalignment='top', xycoords='figure fraction', fontsize=8, color='#696969')
     ax1.set_axis_off()
     vmin, vmax = 0, map_df['agri_gdpshare'].max()
     sm = plt.cm.ScalarMappable(cmap='Greens', norm=plt.Normalize(vmin=vmin, vmax=vmax))
     sm._A = []
-    cbar = fig.colorbar(sm, fraction=0.035, pad=0.005, ax=ax1)
+    cbaxes = fig.add_axes([0.14, 0.25, 0.01, 0.55])
+    cbar = fig.colorbar(sm, fraction=0.035, pad=0.005, ax=ax1, cax=cbaxes)
     
-    map_df_temp.plot(column='gpcp', cmap='PuBu', ax=ax2, alpha=1, edgecolor='.3', linewidth=.3)
+    map_df_temp.plot(column='gpcp', cmap='PuBu', ax=ax2, alpha=1, edgecolor='.6', linewidth=.3)
     ax2.set_title('Rainfall in {:}'.format(year), fontsize=12)
     ax2.set_axis_off()
     vmin, vmax = 0, map_df['gpcp'].max()
     sm = plt.cm.ScalarMappable(cmap='PuBu', norm=plt.Normalize(vmin=vmin, vmax=vmax))
     sm._A = []
-    cbar = fig.colorbar(sm, fraction=0.035, pad=0.005, ax=ax2)
+    cbaxes = fig.add_axes([0.56, 0.25, 0.01, 0.55])
+    cbar = fig.colorbar(sm, fraction=0.035, pad=0.005, ax=ax2, cax=cbaxes)
 
 
 
@@ -139,17 +141,17 @@ def draw_story_map(year):
 
     fig, (ax1, ax2, ax3) = plt.subplots(ncols=3, sharex=True, sharey=True, figsize=(20,7))    
     
-    map_df_temp.plot(column='dum_rain_20', cmap='Blues', ax=ax1, alpha=1, edgecolor='.3', linewidth=.3)
+    map_df_temp.plot(column='dum_rain_20', cmap='Blues', ax=ax1, alpha=1, edgecolor='.6', linewidth=.3)
     ax1.set_title('Drought in %s' %str(year-2), fontsize=12)
     ax1.annotate('Countries in white: no data available.', xy=(0.1, .08), horizontalalignment='left', 
                     verticalalignment='top', xycoords='figure fraction', fontsize=8, color='#696969')
     ax1.set_axis_off()
     
-    map_df_temp.plot(column='recession_l2', cmap='Purples', ax=ax2, alpha=1, edgecolor='.3', linewidth=.3)
+    map_df_temp.plot(column='recession_l2', cmap='Purples', ax=ax2, alpha=1, edgecolor='.6', linewidth=.3)
     ax2.set_title('Recession in %s' %str(year-2), fontsize=12)
     ax2.set_axis_off()
     
-    map_df_temp.plot(column='polity_change_l', cmap='PuBuGn', ax=ax3, alpha=1, edgecolor='.3', linewidth=.3)
+    map_df_temp.plot(column='polity_change_l', cmap='PuBuGn', ax=ax3, alpha=1, edgecolor='.6', linewidth=.3)
     ax3.set_title('Change of combined polity score %s to %s' %(str(year-2),str(year-1)), fontsize=12)
     ax3.set_axis_off()
     vmin, vmax = 0, map_df_temp['polity_change_l'].max()
