@@ -8,3 +8,6 @@ dependencies:
 - matplotlib
 - seaborn
 - jupyterlab
+
+- pip:
+      - xlrd

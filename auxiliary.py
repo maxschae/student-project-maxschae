@@ -13,7 +13,7 @@ import seaborn as sns
 
 def get_panel_dataset():
     dataset = "data/database.dta"
-    dataset_elections = "data/african_elections.xlsx"
+    dataset_elections = "data/african_elections.xls"
     df_database = pd.read_stata(dataset)
     df_elections = pd.read_excel(dataset_elections)
 
