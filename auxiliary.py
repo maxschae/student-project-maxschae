@@ -13,7 +13,7 @@ import seaborn as sns
 
 def get_panel_dataset():
     dataset = "data/database.dta"
-    dataset_elections = "data/african_elections.xls"
+    dataset_elections = "data/african_elections.xlsx"
     df_database = pd.read_stata(dataset)
     df_elections = pd.read_excel(dataset_elections)
 
@@ -39,7 +39,7 @@ def plot_hists():
     columns = ['polity2', 'lgdp', 'agri_gdpshare', 'polity_change', 'lgpcp_l2']
     labels = ['Polity2', 'Log GDP', 'Agriculture GDP share', 'Change in polity2 score', 'Log rainfall']
     colors = ['#f4416b', '#0F0F0F', '#8ce222', '#b042f4', '#1f77b4']
-    
+
     fig = plt.figure(figsize=[16,8])
     for i,column in enumerate(columns):
         plt.subplot(2,3,i+1)
