@@ -1,12 +1,13 @@
 '''
 Auxiliary file for replication of 
-Brückner and Ciccone (2011) "Rain and the Window of Opportunity"
+Brückner and Ciccone (2011) "Rain and the Democratic Window of Opportunity"
 '''
 
 import numpy as np
 import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 
@@ -32,6 +33,20 @@ def get_panel_dataset():
     df = df.fillna(value={'election':0})
     return df
 
+
+def plot_hists():
+    df = get_panel_dataset()
+    columns = ['polity2', 'lgdp', 'agri_gdpshare', 'polity_change', 'lgpcp_l2']
+    labels = ['Polity2', 'Log GDP', 'Agriculture GDP share', 'Change in polity2 score', 'Log rainfall']
+    colors = ['#f4416b', '#0F0F0F', '#8ce222', '#b042f4', '#1f77b4']
+    
+    fig = plt.figure(figsize=[16,8])
+    for i,column in enumerate(columns):
+        plt.subplot(2,3,i+1)
+        if column == 'polity_change':
+            sns.distplot(df[columns[i]], bins=40, kde=False, axlabel=labels[i], color=colors[i])
+        else:
+            sns.distplot(df[columns[i]], bins=20, kde=False, axlabel=labels[i], color=colors[i])
 
 
 def plot_reduced_form(country_list, election):
@@ -94,38 +109,51 @@ def get_map_data(year):
     easily spotted as "missing" on maps
     '''
     values = {'polity_change_l': -2, 'recession_l2': -0.3, 'dum_rain_20': -0.3, 'year': year,
-             'agri_gdp_av': 0, 'agri_gdpshare': 0, 'gpcp':0}
+             'agri_gdp_av': 0, 'agri_gdpshare': 0, 'gpcp':0, 'polity2': -11}
     merged_df = merged_df.fillna(value=values)    
     return merged_df
 
 
 
-def draw_settings_map(year):
+def draw_settings_map(plot, year):
     
     map_df = get_map_data(year)
     map_df_temp = map_df[map_df['year']==year]
-
-    fig, (ax1, ax2) = plt.subplots(ncols=2, sharex=True, sharey=True, figsize=(20,7))
     
-    map_df_temp.plot(column='agri_gdp_av', cmap='Greens', ax=ax1, alpha=1, edgecolor='.6', linewidth=.3)
-    ax1.set_title('Average agriculture GDP share (1980-2004)', fontsize=12)
-    ax1.annotate('Countries in white: no data available.', xy=(0.1, .08), horizontalalignment='left', 
-                verticalalignment='top', xycoords='figure fraction', fontsize=8, color='#696969')
-    ax1.set_axis_off()
-    vmin, vmax = 0, map_df['agri_gdpshare'].max()
-    sm = plt.cm.ScalarMappable(cmap='Greens', norm=plt.Normalize(vmin=vmin, vmax=vmax))
-    sm._A = []
-    cbaxes = fig.add_axes([0.14, 0.25, 0.01, 0.55])
-    cbar = fig.colorbar(sm, fraction=0.035, pad=0.005, ax=ax1, cax=cbaxes)
+    if plot==1:
+        fig, (ax1, ax2) = plt.subplots(ncols=2, sharex=True, sharey=True, figsize=(20,7))
+        map_df_temp.plot(column='agri_gdp_av', cmap='Greens', ax=ax1, alpha=1, edgecolor='.6', linewidth=.3)
+        ax1.set_title('Average agriculture GDP share in percent (1980-2004)', fontsize=12)
+        ax1.annotate('Countries in white: no data available.', xy=(0.1, .08), horizontalalignment='left', 
+                    verticalalignment='top', xycoords='figure fraction', fontsize=8, color='#696969')
+        ax1.set_axis_off()
+        vmin, vmax = 0, map_df['agri_gdp_av'].max()
+        sm = plt.cm.ScalarMappable(cmap='Greens', norm=plt.Normalize(vmin=vmin, vmax=vmax))
+        sm._A = []
+        cbaxes = fig.add_axes([0.14, 0.25, 0.01, 0.55])
+        cbar = fig.colorbar(sm, fraction=0.035, pad=0.005, ax=ax1, cax=cbaxes)
+        
+        map_df_temp.plot(column='gpcp', cmap='PuBu', ax=ax2, alpha=1, edgecolor='.6', linewidth=.3)
+        ax2.set_title('Rainfall in millimetre in {:}'.format(year), fontsize=12)
+        ax2.set_axis_off()
+        vmin, vmax = 0, map_df['gpcp'].max()
+        sm = plt.cm.ScalarMappable(cmap='PuBu', norm=plt.Normalize(vmin=vmin, vmax=vmax))
+        sm._A = []
+        cbaxes = fig.add_axes([0.56, 0.25, 0.01, 0.55])
+        cbar = fig.colorbar(sm, fraction=0.035, pad=0.005, ax=ax2, cax=cbaxes)
     
-    map_df_temp.plot(column='gpcp', cmap='PuBu', ax=ax2, alpha=1, edgecolor='.6', linewidth=.3)
-    ax2.set_title('Rainfall in {:}'.format(year), fontsize=12)
-    ax2.set_axis_off()
-    vmin, vmax = 0, map_df['gpcp'].max()
-    sm = plt.cm.ScalarMappable(cmap='PuBu', norm=plt.Normalize(vmin=vmin, vmax=vmax))
-    sm._A = []
-    cbaxes = fig.add_axes([0.56, 0.25, 0.01, 0.55])
-    cbar = fig.colorbar(sm, fraction=0.035, pad=0.005, ax=ax2, cax=cbaxes)
+    elif plot==2:
+        fig, ax1 = plt.subplots(ncols=1, sharex=True, sharey=True, figsize=(12,6))
+        
+        map_df_temp.plot(column='polity2', cmap='Oranges', ax=ax1, alpha=1, edgecolor='.6', linewidth=.3)
+        ax1.set_title('Combined polity score in {:}'.format(year), fontsize=12)
+        ax1.set_axis_off()
+        vmin, vmax = map_df['polity2'].min(), map_df['polity2'].max()
+        sm = plt.cm.ScalarMappable(cmap='Oranges', norm=plt.Normalize(vmin=vmin, vmax=vmax))
+        sm._A = []
+        cbaxes = fig.add_axes([0.27, 0.25, 0.01, 0.55])
+        cbar = fig.colorbar(sm, fraction=0.035, pad=0.005, ax=ax1, cax=cbaxes)
+        
 
 
 
