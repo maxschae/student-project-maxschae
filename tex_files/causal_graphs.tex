@@ -1,0 +1,86 @@
+\documentclass[10pt]{article}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\tikzset{>={Latex[width=2mm,length=2mm]}}
+
+\begin{document}
+
+\begin{tikzpicture}[scale=2,font=\footnotesize]
+\tikzstyle{s}=[circle,draw,inner sep=2,fill=black]
+\tikzstyle{h}=[circle,draw, inner sep=2]
+
+\iffalse
+% Graph 1
+% Basic form
+\node [s, label=below:$D$] (d) at (2,2){};
+\node [s, label=above:$Z$] (z) at (0,4){};
+\node [s, label=right:$Y$] (y) at (6,2){};
+\node [h, label=above:$U$] (u) at (4,3.5){};
+\draw [->] (z) edge (d);
+\draw [->] (d) edge (y);
+%\draw [dashed] (d) to [out=40,in=140] (y);
+%\draw [dashed] (d) to [out=-40,in=-140] (y);
+\draw [->] (u) edge (d);
+\draw [->] (u) edge (y);
+
+
+% Graph 2
+% Showing Fixed Effects
+\node [s, label=below:$D$] (d) at (2,2){};
+\node [s, label=above:$Z$] (z) at (0,4){};
+\node [s, label=above:$FE$] (fe) at (4,3.5){};
+\node [s, label=right:$Y$] (y) at (6,2){};
+\draw [->] (z) edge (d);
+\draw [->] (d) edge (y);
+\draw [->] (fe) edge (d);
+\draw [->] (fe) edge (y);
+\draw [dashed] (d) to [out=-40,in=-140] (y);
+
+
+% Graph 3
+% Violating Exogeneity Assumption
+\node [s, label=below:$D$] (d) at (2,2){};
+\node [s, label=above:$Z$] (z) at (0,4){};
+\node [s, label=right:$Y$] (y) at (6,2){};
+\draw [->] (z) edge (d);
+\draw [->] (d) edge (y);
+\draw [->] (z) edge (y);
+\draw [dashed] (d) to [out=-40,in=-140] (y);
+
+
+% Graph 4
+% Violating Exclusive Restriction
+\node [s, label=below:$D$] (d) at (2,2){};
+\node [s, label=above:$Z$] (z) at (0,4){};
+\node [s, label=right:$Y$] (y) at (6,2){};
+\node [h, label=above:$X$] (x) at (4,3.5){};
+\draw [->] (z) edge (d);
+\draw [->] (d) edge (y);
+\draw [->] (z) edge (x);
+\draw [->] (x) edge (y);
+\draw [dashed] (d) to [out=-40,in=-140] (y);
+%\draw [->] (u) edge (d);
+%\draw [->] (u) edge (y);
+
+%\draw [thick][red] (2.5,3) -- (3.5,3);
+%\draw [thick][red] (3,2.6) -- (3,3.35);
+\fi
+
+% Graph 5
+% Elections mechanism
+\node [s, label=below:$D$] (d) at (2,2){};
+\node [s, label=above:$Z$] (z) at (0,4){};
+\node [s, label=above:$FE$] (fe) at (4,3.5){};
+\node [s, label=right:$Y$] (y) at (6,2){};
+\node [s, label=above:$E$] (e) at (4,2){};
+\draw [->] (z) edge (d);
+\draw [->] (d) edge (e);
+\draw [->] (e) edge (y);
+\draw [->] (fe) edge (d);
+\draw [->] (fe) edge (y);
+\draw [dashed] (d) to [out=-40,in=-140] (y);
+
+\end{tikzpicture}
+\end{document}
+
