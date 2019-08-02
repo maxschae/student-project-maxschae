@@ -1,0 +1,339 @@
+\documentclass{article}
+\begin{document}
+
+%%% Table 1
+
+\begin{table}
+\caption{First-stage relationship}
+\begin{center}
+\begin{tabular}{lcccc}
+\hline \\[-1.8ex] 
+ & \multicolumn{3}{c}{\textit{Dependent variable:} log GDP per capita} \\ 
+\hline \\[-1.8ex]
+                      &      (1)    &      (2)    &     (3)     &      (4)      \\
+\hline \\[-1.8ex]
+\midrule
+log rainfall_{t}          & 0.079**     & 0.075***    & 0.076***    & 0.082**      \\
+                      & (0.031)     & (0.028)     & (0.029)     & (0.032)      \\
+log rainfall_{t-1}        &             & 0.048       & 0.046       &              \\
+                      &             & (0.035)     & (0.031)     &              \\
+log rainfall_{t-2}        &             &             & 0.010       &              \\
+                      &             &             & (0.038)     &              \\
+polity_{t}            &             &             &             & -0.002       \\
+                      &             &             &             & (0.022)      \\
+log rainfall_{t}*polity_{t}  &             &             &             & 0.001        \\
+                      &             &             &             & (0.003)      \\
+
+Time Fixed Effects    & Yes         & Yes         & Yes         & Yes          \\
+Country Fixed Effects & Yes         & Yes         & Yes         & Yes          \\
+Country-specific 
+time trend            & Yes         & Yes         & Yes         & Yes          \\
+N                     & 955         & 955         & 955         & 955          \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+%%% Table 2
+
+\begin{table}
+\caption{First-stage relationship}
+\begin{center}
+\begin{tabular}{lcccc}
+\hline \\[-1.8ex] 
+            & \multicolumn{3}{c}{\textit{Dependent variable:} Recession indicator} \\ 
+\hline \\[-1.8ex]
+                      &      (5)    &      (6)    &     (7)     &      (8)      \\
+\hline \\[-1.8ex]
+\midrule
+
+log rainfall_{t}          & -0.399***  & -0.382***  & -0.383***  & -0.376**    \\
+                      & (0.150)    & (0.136)    & (0.140)    & (0.166)     \\
+log rainfall_{t-1}        &            & -0.191     & -0.189     &             \\
+                      &            & (0.149)    & (0.134)    &             \\
+log rainfall_{t-2}        &            &            & -0.018     &             \\
+                      &            &            & (0.158)    &             \\
+polity_{t}            &            &            &            & -0.048      \\
+                      &            &            &            & (0.098)     \\
+log rainfall_{t}*polity_{t}  &            &            &            & 0.005       \\
+                      &            &            &            & (0.014)     \\
+
+Time Fixed Effects    & Yes         & Yes         & Yes         & Yes      \\
+Country Fixed Effects & Yes         & Yes         & Yes         & Yes      \\
+Country-specific 
+time trend            & Yes         & Yes         & Yes         & Yes      \\
+N                     & 955        & 955        & 955        & 955         \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+%%% Table 3
+
+\begin{table}
+\caption{Second-stage Results}
+\begin{center}
+\begin{tabular}{lccccc}
+\hline \\[-1.8ex]
+                      & \Delta \textit{Polity}  & \Delta \textit{Exconst} & \Delta \textit{Polcomp} & \Delta \textit{Exrec} & \textit{Democratic Trans.}\\
+\hline \\[-1.8ex]
+                      &     (1)     &     (2)     &    (3)     &     (4)     &     (5)      \\
+\hline \\[-1.8ex]
+\midrule
+log GDP per capita _{t-1} & -18.021*    & -5.809*     & -7.680*    & -6.137*  &  -1.285** \\
+                      & (9.810)     & (3.491)     & (3.973)    & (3.425) &  (0.635)     \\
+
+Time Fixed Effects    & Yes         & Yes         & Yes         & Yes         & Yes      \\
+Country Fixed Effects & Yes         & Yes         & Yes         & Yes         & Yes      \\
+Country-specific 
+time trend            & Yes         & Yes         & Yes         & Yes         & Yes      \\
+N                     & 955         & 902         & 902         & 902         & 700       \\
+
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+
+%%% Table 4
+
+\begin{table}
+\caption{Rain, Agriculture, GDP, and Democratic Change}
+\begin{center}
+\begin{tabular}{lccc}
+\hline \\[-1.8ex] 
+                      & \textit{log GDP}  & \Delta \textit{Polity} & \textit{Democratic Transition} \\ 
+\hline \\[-1.8ex]
+Panel A               &     (1)     &     (2)     &     (3)     \\
+\hline \\[-1.8ex]
+\midrule
+log rainfall_{t}          & 0.031       & 0.240       & -0.010      \\
+                      & (0.035)     & (0.419)     & (0.044)     \\
+log rainfall_{t-1}        & 0.003       & -0.885      & -0.083      \\
+                      & (0.040)     & (0.810)     & (0.096)     \\
+Time Fixed Effects    & Yes         & Yes         & Yes      \\
+Country Fixed Effects & Yes         & Yes         & Yes      \\
+Country-specific 
+time trend            & Yes         & Yes         & Yes      \\
+N                     & 468         & 468         & 336      \\
+\hline \\[-1.8ex]
+Panel B               &    (4)     &     (5)     &    (6)      \\
+\hline \\[-1.8ex]
+\midrule
+log rainfall_{t}        & 0.130***   & 0.519       & 0.070       \\
+                    & (0.050)    &  (0.755)    & (0.079)     \\
+log rainfall_{t-1}      & 0.088      & -2.773*     & -0.207**    \\
+                    & (0.062)    & (1.576)     & (0.102)     \\
+Time Fixed Effects    & Yes         & Yes         & Yes      \\
+Country Fixed Effects & Yes         & Yes         & Yes      \\
+Country-specific 
+time trend            & Yes         & Yes         & Yes      \\
+N                     & 487         & 487         & 364      \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+%%% Table 5
+
+\begin{table}
+\caption{Rain, Agriculture, GDP, and Democratic Change}
+\begin{center}
+\begin{tabular}{lccc}
+\hline \\[-1.8ex] 
+                      & \textit{log GDP}  & \Delta \textit{Polity} & \textit{Democratic Transition} \\ 
+\hline \\[-1.8ex]
+Panel I               &     (1)     &     (2)     &     (3)     \\
+\hline \\[-1.8ex]
+\midrule
+log rainfall_{t}          & 0.024       & 0.396       & -0.034      \\
+                      & (0.066)     & (0.383)     & (0.058)     \\
+log rainfall_{t-1}        & -0.005       & -0.161      & 0.012      \\
+                      & (0.067)     & (0.671)     & (0.082)     \\
+Time Fixed Effects    & Yes         & Yes         & Yes      \\
+Country Fixed Effects & Yes         & Yes         & Yes      \\
+Country-specific 
+time trend            & Yes         & Yes         & Yes      \\
+N                     & 228         & 228         & 144      \\
+\hline \\[-1.8ex]
+Panel II               &    (4)     &     (5)     &    (6)      \\
+\hline \\[-1.8ex]
+\midrule
+log rainfall_{t}        & 0.030      & 1.197       & 0.089       \\
+                    & (0.064)    & (0.972)     & (0.096)     \\
+log rainfall_{t-1}      & 0.033      & -1.617      & -0.208    \\
+                    & (0.036)    & (1.774)     & (0.132)     \\
+Time Fixed Effects    & Yes         & Yes         & Yes      \\
+Country Fixed Effects & Yes         & Yes         & Yes      \\
+Country-specific 
+time trend            & Yes         & Yes         & Yes      \\
+N                     & 240         & 240         & 192      \\
+\hline \\[-1.8ex]
+\hline \\[-1.8ex]
+                      & \textit{log GDP}  & \Delta \textit{Polity} & \textit{Democratic Transition} \\ 
+\hline \\[-1.8ex]
+Panel III               &     (7)     &     (8)     &     (9)     \\
+\hline \\[-1.8ex]
+\midrule
+log rainfall_{t}          & 0.108*      & 0.569       & 0.063      \\
+                      & (0.059)     & (1.478)     & (0.061)     \\
+log rainfall_{t-1}        & 0.153*      & -6.981***   & -0.390*      \\
+                      & (0.086)     & (2.370)     & (0.213)     \\
+Time Fixed Effects    & Yes         & Yes         & Yes      \\
+Country Fixed Effects & Yes         & Yes         & Yes      \\
+Country-specific 
+time trend            & Yes         & Yes         & Yes      \\
+N                     & 227         & 227         & 172      \\
+\hline \\[-1.8ex]
+Panel IV               &    (10)     &     (11)     &    (12)      \\
+\hline \\[-1.8ex]
+\midrule
+log rainfall_{t}        & 0.271***   & 0.884       & 0.186       \\
+                    & (0.089)    &  (1.598)    & (0.349)     \\
+log rainfall_{t-1}      & 0.120*      & -0.773     & -0.111    \\
+                    & (0.066)    & (1.171)     & (0.125)     \\
+Time Fixed Effects    & Yes         & Yes         & Yes      \\
+Country Fixed Effects & Yes         & Yes         & Yes      \\
+Country-specific 
+time trend            & Yes         & Yes         & Yes      \\
+N                     & 236         & 236         & 168      \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+
+%%% Table 6
+
+\begin{table}
+\caption{2SLS Results - the case with Elections}
+\begin{center}
+\begin{tabular}{lccc}
+\hline \\[-1.8ex] 
+            & \multicolumn{3}{c}{\textit{Dependent variable:} \Delta\ Polity}  \\ 
+\hline \\[-1.8ex]
+                      &     (1)     &     (2)     &     (3)     \\
+\hline \\[-1.8ex]
+\midrule
+
+log GDP per capita _{t-1}         & -18.021*    & -16.967*    & -17.779*     \\
+                      & (9.810)     & (9.892)     & (9.708)      \\
+log GDP pc _{t-1} * election_{t}   &             &             & -0.840**     \\
+                      &             &             & (0.358)      \\
+election_{t}              &             & 1.347***    & 7.355***     \\
+                      &             & (0.312)     & (2.807)      \\
+
+Time Fixed Effects    & Yes         & Yes         & Yes      \\
+Country Fixed Effects & Yes         & Yes         & Yes      \\
+Country-specific 
+time trend            & Yes         & Yes         & Yes      \\
+N                     & 955         & 955         & 955      \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+%%% Table 7
+
+\begin{table}
+\caption{2SLS Results - the case with Elections}
+\begin{center}
+\begin{tabular}{lcccc}
+\hline \\[-1.8ex] 
+                      & \Delta \textit{Exconst} & \Delta \textit{Polcomp} & \Delta \textit{Exrec} & \textit{Democratic Trans.}  \\ 
+\hline \\[-1.8ex]
+                      &     (1)     &     (2)     &     (3)     &     (4)     \\
+\hline \\[-1.8ex]
+\midrule
+
+log GDP per capita _{t-1}          & -5.527      & -7.188*     & -5.786*     & -1.369**      \\
+                      & (3.544)     & (4.115)     & (3.455)     & (0.553)      \\
+log GDP pc _{t-1} * election_{t}   & -0.209**    & -0.316*     & -0.287**    & -0.091*     \\
+                      & (0.099)     & (0.172)     & (0.129)     & (0.050)      \\
+election_{t}              & 1.866**     & 2.868**     & 2.527**     & 0.831**      \\
+                      & (0.789)     & (1.350)     & (0.992)     & (0.385)      \\
+
+Time Fixed Effects    & Yes         & Yes         & Yes         & Yes      \\
+Country Fixed Effects & Yes         & Yes         & Yes         & Yes      \\
+Country-specific 
+time trend            & Yes         & Yes         & Yes         & Yes      \\
+N                     & 902         & 902         & 902         & 700      \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+%%% Table 8
+
+\begin{table}
+\caption{2SLS Results - Government and Military Expenditures}
+\begin{center}
+\begin{tabular}{lcccc}
+\hline \\[-1.8ex]
+                      & \Delta \textit{Gov. Ex.}  & \Delta \textit{Gov. Ex.} & \Delta \textit{Mil. Ex.} & \Delta \textit{Mil. Ex.} \\
+\hline \\[-1.8ex]
+                      &     (1)     &     (2)     &    (3)     &     (4)      \\
+\hline \\[-1.8ex]
+\midrule
+log GDP per capita _{t-1}          & -0.767    & -0.720    & -0.809      & -0.854       \\
+                      & (0.660)   & (0.670)   & (1.191)     & (1.213)      \\
+log GDP pc _{t-1} * election_{t}   &           & 0.007     &             & -0.017       \\
+                      &           & (0.016)   &             & (0.046)      \\
+election_{t}              &           & -0.020    &             & 0.107        \\
+                      &           & (0.125)   &             & (0.331)      \\
+
+Time Fixed Effects    & Yes         & Yes         & Yes         & Yes      \\
+Country Fixed Effects & Yes         & Yes         & Yes         & Yes      \\
+Country-specific 
+time trend            & Yes         & Yes         & Yes         & Yes      \\
+N                     & 867         & 867         & 495         & 495       \\
+
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+%%% Table 9
+
+\begin{table}
+\caption{Mean reversion}
+\begin{center}
+\begin{tabular}{lcccc}
+\hline \\[-1.8ex]
+                       \multicolumn{3}{c}{\textit{Dependent variable:} log rainfall in t} \\
+\hline \\[-1.8ex]
+                      &     (1)     &     (2)      \\
+\hline \\[-1.8ex]
+\midrule
+
+log rainfall_{t-1}        & 0.217***  & 0.112**     \\
+                      & (0.051)   & (0.045)     \\
+
+Country Fixed Effects & Yes         & Yes      \\
+Country-specific 
+time trend            & No         & Yes      \\
+N                     & 955        & 955        \\
+
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+
+
+
+\end{document}
