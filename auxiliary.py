@@ -41,7 +41,7 @@ def get_panel_dataset():
 def plot_hists():
     df = get_panel_dataset()
     columns = ['polity2', 'lgdp', 'agri_gdpshare', 'polity_change', 'lgpcp_l2']
-    labels = ['Polity2', 'Log GDP', 'Agriculture GDP share', 'Change in polity2 score', 'Log rainfall']
+    labels = ['Polity2', 'Log GDP per capita', 'Agriculture GDP share', 'Change in polity2 score', 'Log rainfall']
     colors = ['#f4416b', '#0F0F0F', '#8ce222', '#b042f4', '#1f77b4']
 
     fig = plt.figure(figsize=[16,8])
@@ -119,7 +119,10 @@ def get_map_data(year):
         year_nam += 1
     df_temp = df_temp.append(df_nam, ignore_index=True)
     df_temp['polity_change_l'] = df_temp['polity2l'] - df_temp['polity2l2']
-    df_temp.loc[df_temp['year']==1981, 'polity_change_l'] = 'nan'
+    df_temp.loc[df_temp['year']==1981, 'polity_change_l'] = np.NaN
+    for i in range(len(df_temp)):
+        if (df_temp.iloc[i, df_temp.columns.get_loc('year')] == 1991 and df_temp.iloc[i, df_temp.columns.get_loc('ccode')] == 565):
+            df_temp.iloc[i, df_temp.columns.get_loc('polity_change_l')] = np.NaN
     merged_df = pd.merge(geo_df, df_temp, how='left', on='countryisocode')
     
     '''
@@ -195,11 +198,11 @@ def draw_story_map(year):
     ax2.set_title('Recession in %s' %str(year-2), fontsize=12)
     ax2.set_axis_off()
     
-    map_df_temp.plot(column='polity_change_l', cmap='PuBuGn', ax=ax3, alpha=1, edgecolor='.6', linewidth=.3)
+    map_df_temp.plot(column='polity_change_l', cmap='BuPu', ax=ax3, alpha=1, edgecolor='.6', linewidth=.3)
     ax3.set_title('Change of combined polity score %s to %s' %(str(year-2),str(year-1)), fontsize=12)
     ax3.set_axis_off()
     vmin, vmax = 0, map_df_temp['polity_change_l'].max()
-    sm = plt.cm.ScalarMappable(cmap='PuBuGn', norm=plt.Normalize(vmin=vmin, vmax=vmax))
+    sm = plt.cm.ScalarMappable(cmap='BuPu', norm=plt.Normalize(vmin=vmin, vmax=vmax))
     sm._A = []
     cbar = fig.colorbar(sm, fraction=0.035, pad=0.005, ax=ax3)
 
@@ -423,6 +426,11 @@ def table_x_basic(show):
 
 
 def table_x_extension(show):
+    '''
+    Function estimates reduced-form relationship for sub-samples based 
+    on agricultural GDP shares by means of OLS with standard errors
+    clustered at country level. Output is Tex-file used to produce table below.
+    '''
     df = get_panel_dataset()
     agri_q1 = df['agri_gdp_av'].quantile(q=0.25)-0.0001
     agri_q2 = df['agri_gdp_av'].quantile(q=0.5)-0.0001
@@ -493,23 +501,28 @@ def table_elections(show):
     df = get_panel_dataset()
     df_int = df.copy()
     df_int = df_int.dropna(subset=['exconst_change'])
+    df_dt = df.copy()
+    df_dt = df_dt.dropna(subset=['trans_democ'])
     
     spec_first_stage = 'lgdp_l2 ~ lgpcp_l2 + C(ccode) + C(ccode) : I(year) + C(year)'                           
     rslt = smf.ols(formula=spec_first_stage, data=df).fit()
     rslt_int = smf.ols(formula=spec_first_stage, data=df_int).fit()
+    rslt_dt = smf.ols(formula=spec_first_stage, data=df_dt).fit()
 
     df['lgdp_l_hat'] = rslt.predict()
     df_int['lgdp_l_hat'] = rslt_int.predict()
+    df_dt['lgdp_l_hat'] = rslt_dt.predict()
     df['lgdp_l_hat_elect'] = df['lgdp_l_hat'] * df['election']
     df_int['lgdp_l_hat_elect'] = df_int['lgdp_l_hat'] * df_int['election']
+    df_dt['lgdp_l_hat_elect'] = df_dt['lgdp_l_hat'] * df_dt['election']
 
     spec_second_stage_1 = 'polity_change ~ lgdp_l_hat + C(ccode) + C(ccode) : I(year) + C(year)'
     spec_second_stage_2 = 'polity_change ~ lgdp_l_hat + election + C(ccode) + C(ccode) : I(year) + C(year)'
     spec_second_stage_3 = 'polity_change ~ lgdp_l_hat + lgdp_l_hat_elect + election + C(ccode) + C(ccode) : I(year) + C(year)'
-
     spec_second_stage_4 = 'exconst_change ~ lgdp_l_hat + lgdp_l_hat_elect + election + C(ccode) + C(ccode) : I(year) + C(year)'
     spec_second_stage_5 = 'polcomp_change ~ lgdp_l_hat + lgdp_l_hat_elect + election + C(ccode) + C(ccode) : I(year) + C(year)'
     spec_second_stage_6 = 'exrec_change ~ lgdp_l_hat + lgdp_l_hat_elect + election + C(ccode) + C(ccode) : I(year) + C(year)'
+    spec_second_stage_7 = 'trans_democ ~ lgdp_l_hat + lgdp_l_hat_elect + election + C(ccode) + C(ccode) : I(year) + C(year)'
 
     rslt_1 = smf.ols(formula=spec_second_stage_1,data=df).fit(cov_type='cluster',cov_kwds={'groups':df['ccode']})
     rslt_2 = smf.ols(formula=spec_second_stage_2,data=df).fit(cov_type='cluster',cov_kwds={'groups':df['ccode']})
@@ -517,13 +530,14 @@ def table_elections(show):
     rslt_4 = smf.ols(formula=spec_second_stage_4,data=df_int).fit(cov_type='cluster',cov_kwds={'groups':df_int['ccode']})
     rslt_5 = smf.ols(formula=spec_second_stage_5,data=df_int).fit(cov_type='cluster',cov_kwds={'groups':df_int['ccode']})
     rslt_6 = smf.ols(formula=spec_second_stage_6,data=df_int).fit(cov_type='cluster',cov_kwds={'groups':df_int['ccode']})
+    rslt_7 = smf.ols(formula=spec_second_stage_7,data=df_dt).fit(cov_type='cluster',cov_kwds={'groups':df_dt['ccode']})
 
     output_1 = summary_col([rslt_1,rslt_2,rslt_3], model_names=['(1)','(2)','(3)'],
                             stars=True, float_format='%0.3f',
                             regressor_order=['lgdp_l_hat','lgdp_l_hat_elect','election'],
                             info_dict={'N':lambda x: "{0:d}".format(int(x.nobs)),'R2':lambda x: "{:.2f}".format(x.rsquared)})
 
-    output_2 = summary_col([rslt_4,rslt_5,rslt_6], model_names=['(1)','(2)','(3)'],
+    output_2 = summary_col([rslt_4,rslt_5,rslt_6,rslt_7], model_names=['(1)','(2)','(3)','(4)'],
                             stars=True, float_format='%0.3f',
                             regressor_order=['lgdp_l_hat','lgdp_l_hat_elect','election'],
                             info_dict={'N':lambda x: "{0:d}".format(int(x.nobs)),'R2':lambda x: "{:.2f}".format(x.rsquared)})
@@ -588,7 +602,32 @@ def table_mil_gov(show):
 
 
 
+def table_mean_revert(show):
+    df = get_panel_dataset()
+    df_temp = df.copy()
+    df_temp['lgpcp_change'] = df_temp['lgpcp_l'] - df_temp['lgpcp_l2']
+    spec_1 = 'lgpcp_l ~ lgpcp_l2 + C(ccode)'
+    spec_2 = 'lgpcp_l ~ lgpcp_l2 + C(ccode) + C(ccode) : I(year)'  
 
+    rslt_1 = smf.ols(formula=spec_1, data=df).fit(cov_type='cluster',cov_kwds={'groups':df['ccode']})
+    rslt_2 = smf.ols(formula=spec_2, data=df).fit(cov_type='cluster',cov_kwds={'groups':df['ccode']})
+
+    output = summary_col([rslt_1,rslt_2], model_names=['(1)','(2)'],
+                                 stars=True, float_format='%0.3f',
+                                 regressor_order=['lgpcp_l2'],
+                                 info_dict={'N':lambda x: "{0:d}".format(int(x.nobs)),'R2':lambda x: "{:.2f}".format(x.rsquared)})
+    if show == True:
+        print(output)
+    elif show == False:
+        begintex1 = "\\documentclass{report}"
+        begintex2 = "\\begin{document}"
+        endtex = "\end{document}"
+        f = open('tex_files/table9_raw.tex', 'w')
+        f.write(begintex1)
+        f.write(begintex2)
+        f.write(output.as_latex())
+        f.write(endtex)
+        f.close()
 
 
 
