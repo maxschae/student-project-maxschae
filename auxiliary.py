@@ -39,6 +39,9 @@ def get_panel_dataset():
 
 
 def plot_hists():
+    import warnings
+    warnings.filterwarnings('ignore');
+
     df = get_panel_dataset()
     columns = ['polity2', 'lgdp', 'agri_gdpshare', 'polity_change', 'lgpcp_l2']
     labels = ['Polity2', 'Log GDP per capita', 'Agriculture GDP share', 'Change in polity2 score', 'Log rainfall']
@@ -207,6 +210,29 @@ def draw_story_map(year):
     cbar = fig.colorbar(sm, fraction=0.035, pad=0.005, ax=ax3)
 
 
+
+def quartile_means(by, col):   
+    agri_q1 = df[by].quantile(q=0.25)-0.0001
+    agri_q2 = df[by].quantile(q=0.5)-0.0001
+    agri_q3 = df[by].quantile(q=0.75)-0.0001
+    agri_q4 = df[by].max()
+
+    df_1 = df.copy()
+    df_1 = df_1[df_1[by]<agri_q1]
+    df_2 = df.copy()
+    df_2 = df_2[df_2[by]>agri_q1]
+    df_2 = df_2[df_2[by]<agri_q2]
+    df_3 = df.copy()
+    df_3 = df_3[df_3[by]>agri_q2]
+    df_3 = df_3[df_3[by]<agri_q3]
+    df_4 = df.copy()
+    df_4 = df_4[df_4[by]>agri_q3]
+    df_4 = df_4[df_4[by]<agri_q4]
+    
+    return df_1[col].mean(), df_2[col].mean(), df_3[col].mean(), df_4[col].mean()
+
+
+
 def ecdf(column):
     df = get_panel_dataset()
     df_temp = df[df['dum_rain_20']!=1]
@@ -277,11 +303,15 @@ def plot_acr_weighting_fct(column):
 
 
 
+
+
 '''
 
 In the code section below estimations and output are produced
 
 '''
+
+
 
 
 def table_first_stage(show):
