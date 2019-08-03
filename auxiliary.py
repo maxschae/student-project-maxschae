@@ -211,7 +211,8 @@ def draw_story_map(year):
 
 
 
-def quartile_means(by, col):   
+def quartile_means(by, col):
+    df = get_panel_dataset()   
     agri_q1 = df[by].quantile(q=0.25)-0.0001
     agri_q2 = df[by].quantile(q=0.5)-0.0001
     agri_q3 = df[by].quantile(q=0.75)-0.0001
