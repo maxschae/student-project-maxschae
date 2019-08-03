@@ -65,7 +65,7 @@
 
 %\draw [thick][red] (2.5,3) -- (3.5,3);
 %\draw [thick][red] (3,2.6) -- (3,3.35);
-\fi
+
 
 % Graph 5
 % Elections mechanism
@@ -75,6 +75,23 @@
 \node [s, label=right:$Y$] (y) at (6,2){};
 \node [s, label=above:$E$] (e) at (4,2){};
 \draw [->] (z) edge (d);
+\draw [->] (d) edge (e);
+\draw [->] (e) edge (y);
+\draw [->] (fe) edge (d);
+\draw [->] (fe) edge (y);
+\draw [dashed] (d) to [out=-40,in=-140] (y);
+\fi
+
+
+% Graph 6
+% Elections mechanism
+\node [s, label=below:$D$] (d) at (2,2){};
+\node [s, label=above:$Z$] (z) at (0,4){};
+\node [s, label=above:$FE$] (fe) at (4,3.5){};
+\node [s, label=right:$Y$] (y) at (6,2){};
+\node [s, label=above:$E$] (e) at (4,2.4){};
+\draw [->] (z) edge (d);
+\draw [->] (d) edge (y);
 \draw [->] (d) edge (e);
 \draw [->] (e) edge (y);
 \draw [->] (fe) edge (d);
