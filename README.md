@@ -12,4 +12,10 @@ While the main results of the paper will be replicated, additional work focuses 
 
 Please feel free to ask any question, or to comment on the work.
 
+
+<hr />
+
+
+The repository includes folders for data, graphs, tables and TeX-files. All regression outputs are readout as TeX-files and fixed effect coefficients are manually erased. The final file to produce the tables presented is stored in the same folder. Further, the TeX-file written to produce causal graphs is placed in the TeX-files folder. For reasons of reproducibility and transparency all functions producing regression outputs are called in the Appendix. Hence, the reader should not be afraid of the notebook's length since it emerges due to the blown-up Appendix.
+
 [![Build Status](https://travis-ci.org/HumanCapitalAnalysis/student-project-maxschae.svg?branch=master)](https://travis-ci.org/HumanCapitalAnalysis/student-project-maxschae) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/HumanCapitalAnalysis/student-project-maxschae/master?filepath=student_project.ipynb) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](HumanCapitalAnalysis/student-project-maxschae/blob/master/LICENSE)
